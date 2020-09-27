@@ -1,0 +1,6 @@
+/_build/
+/dist/
+/test/oUnit.log
+*.merlin
+/*.install
+*.swp
