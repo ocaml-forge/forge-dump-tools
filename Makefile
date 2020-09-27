@@ -27,7 +27,7 @@ build:
 doc:
 	dune build @doc
 
-test:
+test: build
 	dune runtest
 
 all:

@@ -22,6 +22,7 @@ Options:\n"
       (fun str -> lst := str :: !lst)
       usage_msg
   in
-  Forge_dump_tools.Zip.load !zipfn;
+  let _zip = Forge_dump_tools.Forge_dump_zip.load !zipfn
+  in
   exit 1
 

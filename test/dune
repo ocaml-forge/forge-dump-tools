@@ -1,4 +1,6 @@
 (test
   (name test)
   (modules test)
+  (deps
+   (glob_files data/*))
   (libraries ounit2 forge-dump-tools))
