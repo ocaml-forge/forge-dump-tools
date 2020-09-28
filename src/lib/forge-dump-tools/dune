@@ -1,4 +1,16 @@
+(rule
+  (targets forge_dump_j.ml
+           forge_dump_j.mli)
+  (deps    forge_dump.atd)
+  (action  (run atdgen -j -j-std %{deps})))
+
+(rule
+  (targets forge_dump_t.ml
+           forge_dump_t.mli)
+  (deps    forge_dump.atd)
+  (action  (run atdgen -t %{deps})))
+
 (library
   (name forge_dump_tools)
   (public_name forge-dump-tools)
-  (libraries zip))
+  (libraries zip biniou yojson atdgen))

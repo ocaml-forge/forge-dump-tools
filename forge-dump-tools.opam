@@ -17,6 +17,10 @@ depends: [
   "base-unix"
   "base-bytes"
   "stdlib-shims"
+  "atdgen"
+  "yojson"
+  "biniou"
+  "camlzip"
   "dune" {>= "1.11.0"}
   "ounit" {with-test & >= "2.0.0"}
 ]

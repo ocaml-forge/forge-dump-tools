@@ -15,8 +15,36 @@ let test_can_open_zip_file_and_read_it test_ctxt =
     true
     (Forge_dump_zip.file_exists zip "frs.json")
 
+let test_can_read_file_from_zip_file test_ctxt =
+  let fn = in_testdata_dir test_ctxt ["ocamlmod.zip"] in
+  let zip = Forge_dump_zip.load fn in
+  assert_equal
+    ~printer:string_of_int
+    ~msg:"Can read file group.json"
+    91
+    (String.length (Forge_dump_zip.file_content zip "group.json"))
+
+let test_can_decode_group_json test_ctxt =
+  let fn = in_testdata_dir test_ctxt ["ocamlmod.zip"] in
+  let zip = Forge_dump_zip.load fn in
+  let grp = Forge_dump_zip.group zip in
+  assert_equal
+    ~printer:(fun s -> s)
+    "ocamlmod"
+    grp.Forge_dump_t.group_name;
+  assert_equal
+    ~printer:(fun s -> s)
+    "ocamlmod"
+    grp.Forge_dump_t.unix_group_name;
+  assert_equal
+    ~printer:string_of_int
+    244
+    grp.Forge_dump_t.group_id
+
 let () =
   run_test_tt_main
     ("forge-dump-tools" >::: [
-      "CanOpenZipFileAndReadIt" >:: test_can_open_zip_file_and_read_it
+      "CanOpenZipFileAndReadIt" >:: test_can_open_zip_file_and_read_it;
+      "CanReadFileFromZipFile" >:: test_can_read_file_from_zip_file;
+      "CanDecodeGroupJSON" >:: test_can_decode_group_json;
     ])

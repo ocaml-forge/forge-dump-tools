@@ -1,0 +1,5 @@
+type group = {
+  group_name: string;
+  group_id: int;
+  unix_group_name: string;
+}
