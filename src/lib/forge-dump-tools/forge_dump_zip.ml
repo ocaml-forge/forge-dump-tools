@@ -66,7 +66,33 @@ let file_content zip fn =
   end
 
 (**
+ * Copy a file from a forge dump.
+ *)
+let file_copy zip fn chn =
+  let z = Zip.open_in zip.zip_filename in
+  try begin
+    let entry = Zip.find_entry z (zip.name^"/"^fn) in
+    Zip.copy_entry_to_channel z entry chn;
+    Zip.close_in z
+  end with Not_found -> begin
+    Zip.close_in z;
+    failwith
+      (Printf.sprintf "unable to find file %s in zip %s" fn zip.zip_filename)
+  end
+
+(**
  * Read group.json and return it.
  *)
 let group zip =
   Forge_dump_j.group_of_string (file_content zip "group.json")
+
+(**
+ * Read artifact.json and return it.
+ *)
+let artifact zip =
+  Forge_dump_j.artifact_of_string (file_content zip "artifact.json")
+
+(**
+ * Copy a file from an artifact.
+ *)
+let artifact_file zip fn chn = file_copy zip ("artifact/"^fn) chn

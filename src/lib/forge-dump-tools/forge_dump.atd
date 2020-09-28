@@ -3,3 +3,44 @@ type group = {
   group_id: int;
   unix_group_name: string;
 }
+
+
+type dropped_entry = {
+  summary: string;
+  files: string list;
+}
+
+type entry = {
+  artifact_id: int;
+  status: string;
+  priority: int;
+  submitted_by: string;
+  assigned_to: string;
+  open_date: int;
+  close_date: int;
+  summary: string;
+  details: string;
+  messages: message list;
+  files: file list;
+}
+
+type message = {
+  submitted_by: string;
+  add_date: int;
+  body: string;
+}
+
+type file = {
+  submitted_by: string;
+  add_date: int;
+  filename: string;
+}
+
+type tracker = {
+  name: string;
+  group_artifact_id: int;
+  entries: entry list;
+  dropped_entries: dropped_entry list;
+}
+
+type artifact = tracker list
