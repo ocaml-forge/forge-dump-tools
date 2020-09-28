@@ -10,7 +10,7 @@ type dropped_entry = {
   files: string list;
 }
 
-type entry = {
+type artifact_entry = {
   artifact_id: int;
   status: string;
   priority: int;
@@ -39,8 +39,19 @@ type file = {
 type tracker = {
   name: string;
   group_artifact_id: int;
-  entries: entry list;
+  entries: artifact_entry list;
   dropped_entries: dropped_entry list;
 }
 
 type artifact = tracker list
+
+type release_entry = {
+  release_name: string;
+  filename: string;
+  release_id: int;
+  file_id : int;
+  package_name: string;
+  package_id: int;
+}
+
+type frs = release_entry list

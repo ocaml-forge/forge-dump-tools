@@ -96,3 +96,20 @@ let artifact zip =
  * Copy a file from an artifact.
  *)
 let artifact_file zip fn chn = file_copy zip ("artifact/"^fn) chn
+
+(**
+ * Read frs.json and return it.
+ *)
+let frs zip =
+  Forge_dump_j.frs_of_string (file_content zip "frs.json")
+
+(**
+ * Copy a file from an release_entry.
+ *)
+let frs_file zip release_entry chn =
+  let fn =
+    release_entry.Forge_dump_t.package_name^"/"^
+    release_entry.Forge_dump_t.release_name^"/"^
+    release_entry.Forge_dump_t.filename
+  in
+  file_copy zip ("frs/"^fn) chn
