@@ -46,3 +46,6 @@ $> forge-dump-migrate-bugs-to-github \
    --user gildor478 \
    --repo forge-dump-migration-test
 ```
+
+See the results of running the script:
+https://github.com/gildor478/forge-dump-migration-test/issues
