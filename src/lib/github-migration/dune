@@ -1,0 +1,3 @@
+(library
+  (name github_migration)
+  (libraries forge-dump-tools github jingoo calendar threads netstring))

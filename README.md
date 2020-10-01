@@ -25,3 +25,24 @@ Documentation
 
 API documentation is
 [available online](https://gildor478.github.io/forge-dump-tools).
+
+forge-dump-migrate-bugs-to-github
+---------------------------------
+
+This executable helps to migrate issues. It also lists the actions that need
+to be done afterwards, like uploading file. Credential are obtained through
+`git-jar`.
+
+
+Example:
+
+```sh
+$> opam install lwt_ssl github forge-dump-tools
+$> export SSL_CERT_DIR=/etc/ssl/certs/
+$> git jar make gildor478 forge.o.o -s public_repo
+$> forge-dump-migrate-bugs-to-github \
+   --zip ounit.zip \
+   --todo ounit-todo.txt \
+   --user gildor478 \
+   --repo forge-dump-migration-test
+```

@@ -3,4 +3,4 @@
   (modules test)
   (deps
    (glob_files data/*))
-  (libraries ounit2 forge-dump-tools))
+  (libraries ounit2 forge-dump-tools github_migration batteries))

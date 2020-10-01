@@ -1,4 +1,4 @@
 (executable
  (name Main)
  (public_name forge-dump-migrate-bugs-to-github)
- (libraries forge-dump-tools))
+ (libraries forge-dump-tools github_migration github github-unix lwt))
