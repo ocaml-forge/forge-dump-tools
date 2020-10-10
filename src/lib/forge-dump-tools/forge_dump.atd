@@ -2,6 +2,10 @@ type group = {
   group_name: string;
   group_id: int;
   unix_group_name: string;
+  members: string list;
+  admins: string list;
+  register_date: int;
+  short_description: string;
 }
 
 

@@ -1,0 +1,4 @@
+(executable
+ (name Main)
+ (public_name forge-dump-create-forge.o.o-website)
+ (libraries forge-dump-tools jingoo threads netstring calendar re batteries))
