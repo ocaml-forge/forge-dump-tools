@@ -1,9 +1,10 @@
 let github_re = Re.compile (Re.Posix.re "(https://github.com/[^ ]*)")
 let redirect_re =  Re.compile (Re.Posix.re "Redirect +[0-9]+ +/ +(http[^ ]*)")
+let crlf = Re.compile (Re.str "\r\n")
 
 let write_file fn content =
   let fd = open_out fn in
-  output_string fd content;
+  output_string fd (Re.replace crlf ~f:(fun _ -> "\n") content);
   close_out fd
 
 
@@ -120,7 +121,9 @@ no_index: true
   * {{ user }}
 {%- endfor -%}
 {% endif %}
+{% if released_files > 0 -%}
 * [Releases](https://download.ocamlcore.org/{{ unix_group_name }})
+{% endif -%}
 * Registered: {{ register_date }}
 * Archived data:
   * {{ open_bugs }} open bugs
