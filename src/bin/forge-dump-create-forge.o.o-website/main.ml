@@ -151,18 +151,37 @@ let create_users dir lst =
     in
     MapString.add u (SetString.add e st) m
   in
-  let projects_of_admin, projects_of_member =
+
+  let extract_user_from_artifact st artifact =
+    let open Forge_dump_tools.Forge_dump_t in
+    let extract_users_from_message st (msg: message) =
+      SetString.add msg.submitted_by st
+    in
+    let extract_users_from_entry st (e: artifact_entry) =
+      SetString.add e.submitted_by
+        (SetString.add e.assigned_to
+          (List.fold_left extract_users_from_message st e.messages))
+    in
+    let extract_users_from_tracker st t =
+      List.fold_left extract_users_from_entry st t.entries
+    in
+    List.fold_left extract_users_from_tracker st artifact
+  in
+
+  let projects_of_admin, projects_of_member, artifact_users =
     List.fold_left
-      (fun (a, m) fn ->
+      (fun (a, m, u) fn ->
         let dump = Forge_dump_tools.Forge_dump_zip.load fn in
         let grp = Forge_dump_tools.Forge_dump_zip.group dump in
+        let artifact = Forge_dump_tools.Forge_dump_zip.artifact dump in
         List.fold_left
           (fun a u -> append a u grp.unix_group_name)
           a grp.admins,
         List.fold_left
           (fun m u -> append m u grp.unix_group_name)
-          m grp.members)
-      (MapString.empty, MapString.empty)
+          m grp.members,
+        extract_user_from_artifact u artifact)
+      (MapString.empty, MapString.empty, SetString.empty)
       lst
   in
   let projects_of_member =
@@ -179,8 +198,8 @@ let create_users dir lst =
     let st = MapString.fold
       (fun u _ st -> SetString.add u st)
       projects_of_admin
-      SetString.empty
-    in
+      artifact_users
+  in
     MapString.fold
       (fun u _ st -> SetString.add u st)
       projects_of_member
@@ -210,6 +229,9 @@ title: \"{{ user }}\"
 no_index: true
 ---
 
+{% if length(admins) == 0 && length(members) == 0 -%}
+* No projects
+{% else -%}
 * Projects:
 {%- for project in admins %}
   * [{{ project }}](/projects/{{ project }}/) (admin)
@@ -217,6 +239,7 @@ no_index: true
 {%- for project in members %}
   * [{{ project }}](/projects/{{ project }}/)
 {%- endfor -%}
+{% endif %}
 "
     in
     let fn = dir^"/"^u^".md" in
