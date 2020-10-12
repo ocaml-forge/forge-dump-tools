@@ -7,6 +7,9 @@ Features of the project:
 * Migrate bugs, features requests and patches from the .zip file and create
   Github Issues.
 
+The goal of this project is not to be long term maintained. It is provided as
+a one off solution to migrate the OCaml forge dump.
+
 <!-- TODO: add a link to website/announce for the dump. -->
 
 [opam]: https://opam.ocaml.org
@@ -17,7 +20,7 @@ Installation
 The recommended way to install fileutils is via the [opam package manager][opam]:
 
 ```sh
-$ opam install forge-dump-tools
+$ opam pin add forge-dump-tools https://github.com/ocaml-forge/forge-dump-tools.git
 ```
 
 Documentation
